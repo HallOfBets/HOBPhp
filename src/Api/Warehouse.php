@@ -8,13 +8,160 @@ namespace HOB\SDK\Api;
 class Warehouse extends GenericResource
 {
     /**
+     * @var string
+     */
+    protected $servicePrefix = '/warehouse/api';
+
+
+    /**
      * @param array $params
-     * @return array
+     * @return \HOB\SDK\Model\ApiResource
      */
     public function getSports(array $params = [])
     {
-        $response = $this->getApiClient()->get('/sports');
+        $response = $this->getApiClient()->get($this->servicePrefix.'/sports', $params);
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $sportId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getSport($sportId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/sports/'. (int) $sportId, $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $sportId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getSportTournaments($sportId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/sports/'. (int) $sportId .'/tournaments', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $sportId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getSportMatches($sportId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/sports/'. (int) $sportId .'/matches', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getTournaments(array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/tournaments', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $tournamentId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getTournament($tournamentId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/tournaments/'. (int) $tournamentId, $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $tournamentId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getTournamentMatches($tournamentId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/tournaments/'. (int) $tournamentId .'/matches', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $tournamentId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getTournamentTeams($tournamentId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/tournaments/'. (int) $tournamentId .'/teams', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getMatches(array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/matches', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $matchId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getMatch($matchId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/matches/'. (int) $matchId, $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $matchId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getMatchesTeams($matchId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/matches/'. (int) $matchId .'/teams', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getTeams(array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/matches', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $teamId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function getTeam($teamId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/teams/'. (int) $teamId, $params);
+
+        return $this->createResource($response);
     }
 }

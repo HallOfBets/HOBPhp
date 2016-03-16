@@ -23,6 +23,11 @@ class ApiClient
     protected $endpoint;
 
     /**
+     * @var string
+     */
+    protected $basepath;
+
+    /**
      * @var Header[]
      */
     protected $headers;
@@ -49,7 +54,8 @@ class ApiClient
             throw new CoreException("Missing 'endpoint' argument");
         }
 
-        $this->endpoint = $config['endpoint'];
+        // Handle base path
+        $this->basepath = isset($config['basepath']) ? $config['basepath'] : '';
 
         // Handle headers
         $this->processHeaders(isset($config['headers']) ? $config['headers'] : []);
@@ -58,7 +64,7 @@ class ApiClient
         $this->guzzleOptions = isset($config['guzzleOptions']) ? $config['guzzleOptions'] : [];
 
         // Set client
-        $this->client = new GuzzleClient($this->guzzleOptions);
+        $this->client = new GuzzleClient($config['endpoint'], $this->guzzleOptions);
     }
 
     /**
@@ -76,15 +82,6 @@ class ApiClient
             $this->headers[] = $header;
         }
 
-        $this->addClientInfoHeaders();
-    }
-
-
-    /**
-     *
-     */
-    private function addClientInfoHeaders()
-    {
         $infoHeader = new InfoHeaders();
         $infoHeader->setPackage('hob-api-php', self::API_VERSION);
         $infoHeader->setEnvironment('php', phpversion());
@@ -115,6 +112,15 @@ class ApiClient
      */
     public function get($url, array $parameters = [], array $headers = [])
     {
-        return $this->client->get($url, $parameters, $headers);
+        return $this->client->get($this->formatUrl($url), $parameters, $headers);
+    }
+
+    /**
+     * @param $url
+     * @return string
+     */
+    protected function formatUrl($url)
+    {
+        return $this->basepath . $url;
     }
 }

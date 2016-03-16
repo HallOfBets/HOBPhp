@@ -10,14 +10,15 @@ use GuzzleHttp\Psr7\Request;
  */
 class GuzzleClient
 {
-
-
     /**
      * GuzzleClient constructor.
+     * @param $endpoint
      * @param array $guzzleOptions
      */
-    public function __construct(array $guzzleOptions = [])
+    public function __construct($endpoint, array $guzzleOptions = [])
     {
+        $guzzleOptions['base_uri'] = $endpoint;
+
         $this->client = new Client($guzzleOptions);
     }
 
