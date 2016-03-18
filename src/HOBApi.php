@@ -1,6 +1,7 @@
 <?php
 namespace HOB\SDK;
 
+use HOB\SDK\Api\Betting;
 use HOB\SDK\Api\Helper\ApiClient;
 use HOB\SDK\Api\Warehouse;
 use HOB\SDK\Exception\CoreException;
@@ -16,7 +17,15 @@ class HOBApi
      */
     private $apiClient;
 
+    /**
+     * @var Warehouse
+     */
     public $warehouse;
+
+    /**
+     * @var Betting
+     */
+    public $betting;
 
 
     /**
@@ -37,8 +46,9 @@ class HOBApi
         // Set API authentication
         $this->setApiAuth($apiKey);
 
-        // Add service
+        // Add services
         $this->warehouse = new Warehouse($this->apiClient);
+        $this->betting   = new Betting($this->apiClient);
     }
 
     protected function setApiAuth($apiKey)
@@ -75,7 +85,7 @@ class HOBApi
     final public function checkRequirements()
     {
         if (!function_exists('curl_version')) {
-            throw new CoreException('CURL extension is needed to use HOB SDK. Not found.');
+//            throw new CoreException('CURL extension is needed to use HOB SDK. Not found.');
         }
 
         if (!function_exists('json_decode')) {
