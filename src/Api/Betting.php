@@ -29,7 +29,7 @@ class Betting extends GenericResource
      * @param array $params
      * @return \HOB\SDK\Model\ApiResource
      */
-    public function getSport($betId, array $params = [])
+    public function getBet($betId, array $params = [])
     {
         $response = $this->getApiClient()->get($this->servicePrefix.'/bets/'. (int) $betId, $params);
 
