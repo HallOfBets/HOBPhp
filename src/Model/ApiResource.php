@@ -39,9 +39,17 @@ class ApiResource
         $this->data = json_decode($response->getBody()->getContents(), true);
 
         // Set pagination
-        $this->paginationCurrent = $response->getHeader("X-Pagination-Current");
-        $this->paginationCount   = $response->getHeader("X-Pagination-Count");
-        $this->paginationPages   = $response->getHeader("X-Pagination-Pages");
+        $current = $response->getHeader("X-Pagination-Current");
+        $current = is_array($current) ? current($current) : $current;
+        $this->paginationCurrent   = $current;
+
+        $count = $response->getHeader("X-Pagination-Count");
+        $count = is_array($count) ? current($count) : $count;
+        $this->paginationCount   = $count;
+
+        $pages = $response->getHeader("X-Pagination-Pages");
+        $pages = is_array($pages) ? current($pages) : $pages;
+        $this->paginationPages   = $pages;
     }
 
     /**

@@ -10,7 +10,7 @@ class Betting extends GenericResource
     /**
      * @var string
      */
-    protected $servicePrefix = '/betting/api';
+    protected $servicePrefix = '/betting';
 
 
     /**
@@ -32,29 +32,6 @@ class Betting extends GenericResource
     public function getSport($betId, array $params = [])
     {
         $response = $this->getApiClient()->get($this->servicePrefix.'/bets/'. (int) $betId, $params);
-
-        return $this->createResource($response);
-    }
-
-    /**
-     * @param array $params
-     * @return \HOB\SDK\Model\ApiResource
-     */
-    public function getQuestions(array $params = [])
-    {
-        $response = $this->getApiClient()->get($this->servicePrefix.'/questions', $params);
-
-        return $this->createResource($response);
-    }
-
-    /**
-     * @param $questionId
-     * @param array $params
-     * @return \HOB\SDK\Model\ApiResource
-     */
-    public function getQuestion($questionId, array $params = [])
-    {
-        $response = $this->getApiClient()->get($this->servicePrefix.'/questions/'. (int) $questionId, $params);
 
         return $this->createResource($response);
     }
