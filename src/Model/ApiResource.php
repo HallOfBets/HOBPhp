@@ -1,6 +1,5 @@
 <?php
 namespace HOB\SDK\Model;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class ApiResource
@@ -11,76 +10,68 @@ class ApiResource
     /**
      * @var mixed
      */
-    private $data;
+    private $content;
 
     /**
      * @var integer
      */
-    private $paginationCurrent;
+    protected $totalItems;
 
     /**
      * @var integer
      */
-    private $paginationCount;
+    protected $currentPage;
 
     /**
      * @var integer
      */
-    private $paginationPages;
+    protected $totalPages;
 
 
     /**
      * ApiResource constructor.
-     * @param ResponseInterface $response
+     * @param $content
+     * @param null $totalItems
+     * @param null $currentPage
+     * @param null $totalPages
      */
-    public function __construct(ResponseInterface $response)
+    public function __construct($content, $totalItems = null, $currentPage = null, $totalPages = null)
     {
-        // Set data
-        $this->data = json_decode($response->getBody()->getContents(), true);
-
-        // Set pagination
-        $current = $response->getHeader("X-Pagination-Current");
-        $current = is_array($current) ? current($current) : $current;
-        $this->paginationCurrent   = $current;
-
-        $count = $response->getHeader("X-Pagination-Count");
-        $count = is_array($count) ? current($count) : $count;
-        $this->paginationCount   = $count;
-
-        $pages = $response->getHeader("X-Pagination-Pages");
-        $pages = is_array($pages) ? current($pages) : $pages;
-        $this->paginationPages   = $pages;
+        $this->content      = $content;
+        $this->totalItems   = $totalItems;
+        $this->currentPage  = $currentPage;
+        $this->totalPages   = $totalPages;
     }
 
     /**
      * @return mixed
      */
-    public function getData()
+    public function getContent()
     {
-        return $this->data;
+        return $this->content;
     }
 
     /**
      * @return int
      */
-    public function getPaginationCurrent()
+    public function getTotalItems()
     {
-        return $this->paginationCurrent;
+        return $this->totalItems;
     }
 
     /**
      * @return int
      */
-    public function getPaginationCount()
+    public function getCurrentPage()
     {
-        return $this->paginationCount;
+        return $this->currentPage;
     }
 
     /**
      * @return int
      */
-    public function getPaginationPages()
+    public function getTotalPages()
     {
-        return $this->paginationPages;
+        return $this->totalPages;
     }
 }
