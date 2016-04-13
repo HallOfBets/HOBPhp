@@ -20,7 +20,7 @@ class HOBApi
     /**
      * @var WarehouseBetting
      */
-    public $warehouse;
+    public $warehousebetting;
 
     /**
      * @var Betting
@@ -47,8 +47,8 @@ class HOBApi
         $this->setApiAuth($apiKey);
 
         // Add services
-        $this->warehouse = new WarehouseBetting($this->apiClient);
-        $this->betting   = new Betting($this->apiClient);
+        $this->warehousebetting     = new WarehouseBetting($this->apiClient);
+        $this->betting              = new Betting($this->apiClient);
     }
 
     protected function setApiAuth($apiKey)
