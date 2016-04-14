@@ -2,7 +2,7 @@
 namespace HOB\SDK\Api;
 
 use HOB\SDK\Api\Helper\ApiClient;
-use HOB\SDK\Model\ApiResource;
+use HOB\SDK\Model\ApiResponseResource;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -36,11 +36,11 @@ abstract class GenericResource
 
     /**
      * @param ResponseInterface $response
-     * @return ApiResource
+     * @return ApiResponseResource
      */
     public function createResource(ResponseInterface $response)
     {
-        $resource = new ApiResource($response);
+        $resource = new ApiResponseResource($response);
 
         return $resource;
     }

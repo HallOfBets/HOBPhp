@@ -16,9 +16,9 @@ class ApiResponseResource extends ApiResource
     public function __construct(ResponseInterface $response)
     {
         $content        = json_decode($response->getBody()->getContents(), true);
-        $totalItems     = $response->getHeader('X-Pagination-Count');
-        $currentPage    = $response->getHeader('X-Pagination-Current');
-        $totalPages     = $response->getHeader('X-Pagination-Pages');
+        $totalItems     = $this->getHeader($response, 'X-Pagination-Count');
+        $currentPage    = $this->getHeader($response, 'X-Pagination-Current');
+        $totalPages     = $this->getHeader($response, 'X-Pagination-Pages');
 
         parent::__construct($content, $totalItems, $currentPage, $totalPages);
     }

@@ -3,6 +3,7 @@ namespace HOB\SDK;
 
 use HOB\SDK\Api\Betting;
 use HOB\SDK\Api\Helper\ApiClient;
+use HOB\SDK\Api\Warehouse;
 use HOB\SDK\Api\WarehouseBetting;
 use HOB\SDK\Exception\CoreException;
 
@@ -18,14 +19,19 @@ class HOBApi
     private $apiClient;
 
     /**
-     * @var WarehouseBetting
+     * @var Warehouse
      */
-    public $warehousebetting;
+    public $warehouse;
 
     /**
      * @var Betting
      */
     public $betting;
+
+    /**
+     * @var WarehouseBetting
+     */
+    public $warehousebetting;
 
 
     /**
@@ -47,8 +53,9 @@ class HOBApi
         $this->setApiAuth($apiKey);
 
         // Add services
-        $this->warehousebetting     = new WarehouseBetting($this->apiClient);
+        $this->warehouse            = new Warehouse($this->apiClient);
         $this->betting              = new Betting($this->apiClient);
+        $this->warehousebetting     = new WarehouseBetting($this->apiClient);
     }
 
     protected function setApiAuth($apiKey)
