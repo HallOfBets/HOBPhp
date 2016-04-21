@@ -44,7 +44,7 @@ class ApiResource
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getContent()
     {

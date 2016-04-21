@@ -2,6 +2,7 @@
 namespace HOB\SDK;
 
 use HOB\SDK\Api\Betting;
+use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
 use HOB\SDK\Api\Warehouse;
 use HOB\SDK\Api\WarehouseBetting;
@@ -47,10 +48,7 @@ class HOBApi
         $this->checkRequirements();
 
         // Create API client
-        $this->setApiClient($endpoint, $basepath, $guzzleOptions);
-
-        // Set API authentication
-        $this->setApiAuth($apiKey);
+        $this->setApiClient($endpoint, $basepath, $apiKey, $guzzleOptions);
 
         // Add services
         $this->warehouse            = new Warehouse($this->apiClient);
@@ -58,26 +56,22 @@ class HOBApi
         $this->warehousebetting     = new WarehouseBetting($this->apiClient);
     }
 
-    protected function setApiAuth($apiKey)
-    {
-        /**
-         * @todo retrieve an access token and add in client header
-         */
-    }
-
     /**
      * @param $endpoint
      * @param string $basepath
      * @param array $guzzleOptions
      */
-    protected function setApiClient($endpoint, $basepath, array $guzzleOptions)
+    protected function setApiClient($endpoint, $basepath, $apiKey, array $guzzleOptions)
     {
         $apiEndpoint = "http://{$endpoint}";
 
         $client = new ApiClient([
             'endpoint'      => $apiEndpoint,
             'basepath'      => $basepath,
-            'guzzleOptions' => $guzzleOptions
+            'guzzleOptions' => $guzzleOptions,
+            'headers' => [
+                new AuthorizationBearer($apiKey)
+            ]
         ]);
 
         $this->apiClient = $client;

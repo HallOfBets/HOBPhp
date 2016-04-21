@@ -79,14 +79,22 @@ class ApiClient
                 $header = new Header($name, $header);
             }
 
-            $this->headers[] = $header;
+            $this->addHeader($header);
         }
 
         $infoHeader = new InfoHeaders();
         $infoHeader->setPackage('hob-api-php', self::API_VERSION);
         $infoHeader->setEnvironment('php', phpversion());
 
-        $this->headers[] = new Header('HOB-Client', $infoHeader->build());
+        $this->addHeader(new Header('HOB-Client', $infoHeader->build()));
+    }
+
+    /**
+     * @param Header $header
+     */
+    public function addHeader(Header $header)
+    {
+        $this->headers[] = $header;
     }
 
     /**
@@ -105,6 +113,20 @@ class ApiClient
     }
 
     /**
+     * @return array
+     */
+    protected function getRequestHeaders()
+    {
+        $headers = [];
+
+        foreach($this->headers as $header) {
+            $headers[$header->getHeader()] = $header->getValue();
+        }
+
+        return $headers;
+    }
+
+    /**
      * @param $url
      * @param array $parameters
      * @param array $headers
@@ -112,7 +134,7 @@ class ApiClient
      */
     public function get($url, array $parameters = [], array $headers = [])
     {
-        return $this->client->get($this->formatUrl($url), $parameters, $headers);
+        return $this->client->get($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
     }
 
     /**

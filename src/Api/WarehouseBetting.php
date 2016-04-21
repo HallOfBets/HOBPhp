@@ -14,7 +14,7 @@ class WarehouseBetting extends GenericResource
 
     /**
      * @param array $params
-     * @return \HOB\SDK\Model\ApiResource
+     * @return \HOB\SDK\Model\ApiResponseResource
      */
     public function getWarehouseBets(array $params = [])
     {
