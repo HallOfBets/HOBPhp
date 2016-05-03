@@ -139,6 +139,17 @@ class ApiClient
 
     /**
      * @param $url
+     * @param array $parameters
+     * @param array $headers
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function post($url, array $parameters = [], array $headers = [])
+    {
+        return $this->client->post($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
+    }
+
+    /**
+     * @param $url
      * @return string
      */
     protected function formatUrl($url)

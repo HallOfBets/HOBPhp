@@ -83,6 +83,18 @@ class Warehouse extends GenericResource
     }
 
     /**
+     * @param $matchId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResource
+     */
+    public function unwindMatch($matchId, array $params = [])
+    {
+        $response = $this->getApiClient()->post($this->servicePrefix.'/matches/'. (int) $matchId.'/unwind', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
      * @param array $params
      * @return \HOB\SDK\Model\ApiResource
      */
