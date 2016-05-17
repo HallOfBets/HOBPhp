@@ -1,8 +1,10 @@
 <?php
 namespace HOB\SDK\Api\Helper;
 
+use GuzzleHttp\Exception\ClientException;
 use HOB\SDK\Api\Header\Header;
 use HOB\SDK\Exception\CoreException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiClient
@@ -134,7 +136,7 @@ class ApiClient
      */
     public function get($url, array $parameters = [], array $headers = [])
     {
-        return $this->client->get($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
+        return $this->call('get', $url, $parameters, $headers);
     }
 
     /**
@@ -145,7 +147,28 @@ class ApiClient
      */
     public function post($url, array $parameters = [], array $headers = [])
     {
-        return $this->client->post($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
+        return $this->call('post', $url, $parameters, $headers);
+    }
+
+    /**
+     * @param $method
+     * @param $url
+     * @param array $parameters
+     * @param array $headers
+     * @return mixed
+     */
+    private function call($method, $url, array $parameters = [], array $headers = [])
+    {
+        try {
+            return $this->client->{$method}($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
+        } catch (ClientException $e) {
+            switch($e->getCode()) {
+                case Response::HTTP_NOT_FOUND:
+                    return $e->getResponse();
+            }
+
+            throw $e;
+        }
     }
 
     /**

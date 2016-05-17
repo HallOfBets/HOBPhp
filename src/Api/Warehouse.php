@@ -14,6 +14,18 @@ class Warehouse extends GenericResource
 
 
     /**
+     * Create sport
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResponseResource
+     */
+    public function createSport(array $params = [])
+    {
+        $response = $this->getApiClient()->post($this->servicePrefix.'/sports', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
      * @param array $params
      * @return \HOB\SDK\Model\ApiResource
      */
@@ -37,6 +49,18 @@ class Warehouse extends GenericResource
     }
 
     /**
+     * Create tournament
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResponseResource
+     */
+    public function createTournament(array $params = [])
+    {
+        $response = $this->getApiClient()->post($this->servicePrefix.'/tournaments', $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
      * @param array $params
      * @return \HOB\SDK\Model\ApiResource
      */
@@ -55,6 +79,18 @@ class Warehouse extends GenericResource
     public function getTournament($tournamentId, array $params = [])
     {
         $response = $this->getApiClient()->get($this->servicePrefix.'/tournaments/'. (int) $tournamentId, $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * Create match
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResponseResource
+     */
+    public function createMatch(array $params = [])
+    {
+        $response = $this->getApiClient()->post($this->servicePrefix.'/matches', $params);
 
         return $this->createResource($response);
     }
@@ -84,12 +120,25 @@ class Warehouse extends GenericResource
 
     /**
      * @param $matchId
-     * @param array $params
-     * @return \HOB\SDK\Model\ApiResource
+     * @param $winner
+     * @return \HOB\SDK\Model\ApiResponseResource
      */
-    public function unwindMatch($matchId, array $params = [])
+    public function setMatchWinner($matchId, $winner)
     {
-        $response = $this->getApiClient()->post($this->servicePrefix.'/matches/'. (int) $matchId.'/unwind', $params);
+        $response = $this->getApiClient()->post($this->servicePrefix.'/matches/'. (int) $matchId.'/winner', ['winner' => $winner]);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * Create team
+     * @param $sportId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResponseResource
+     */
+    public function createTeam($sportId, array $params = [])
+    {
+        $response = $this->getApiClient()->post($this->servicePrefix.'/sports/'. (int) $sportId .'/teams', $params);
 
         return $this->createResource($response);
     }
@@ -113,6 +162,32 @@ class Warehouse extends GenericResource
     public function getTeam($teamId, array $params = [])
     {
         $response = $this->getApiClient()->get($this->servicePrefix.'/teams/'. (int) $teamId, $params);
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $matchId
+     * @param $teamId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResponseResource
+     */
+    public function setMatchTeam($matchId, $teamId, array $params = [])
+    {
+        $response = $this->getApiClient()->post($this->servicePrefix.'/matches/'. (int) $matchId.'/teams', array_merge($params, ['team' => (int) $teamId]));
+
+        return $this->createResource($response);
+    }
+
+    /**
+     * @param $matchId
+     * @param $teamId
+     * @param array $params
+     * @return \HOB\SDK\Model\ApiResponseResource
+     */
+    public function getMatchTeam($matchId, $teamId, array $params = [])
+    {
+        $response = $this->getApiClient()->get($this->servicePrefix.'/matches/'. (int) $matchId.'/teams/'. (int) $teamId, $params);
 
         return $this->createResource($response);
     }

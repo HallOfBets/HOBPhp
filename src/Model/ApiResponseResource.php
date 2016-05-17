@@ -2,6 +2,7 @@
 namespace HOB\SDK\Model;
 
 use Psr\Http\Message\ResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiResponseResource
@@ -15,7 +16,7 @@ class ApiResponseResource extends ApiResource
      */
     public function __construct(ResponseInterface $response)
     {
-        $content        = json_decode($response->getBody()->getContents(), true);
+        $content        = $this->extractContentFromResponse($response);
         $totalItems     = $this->getHeader($response, 'X-Pagination-Count');
         $currentPage    = $this->getHeader($response, 'X-Pagination-Current');
         $totalPages     = $this->getHeader($response, 'X-Pagination-Pages');
@@ -34,5 +35,22 @@ class ApiResponseResource extends ApiResource
         $headerValue = is_array($headerValue) ? current($headerValue) : $headerValue;
 
         return $headerValue;
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     */
+    protected function extractContentFromResponse(ResponseInterface $response)
+    {
+        switch($response->getStatusCode()) {
+            case Response::HTTP_NOT_FOUND:
+                $content = [];
+                break;
+            default:
+                $content = json_decode($response->getBody()->getContents(), true);
+        }
+
+        return $content;
     }
 }
