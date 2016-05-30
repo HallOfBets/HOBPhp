@@ -1,10 +1,9 @@
 <?php
 namespace HOB\SDK\Api\Helper;
 
-use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use HOB\SDK\Api\Header\Header;
-use HOB\SDK\Exception\CoreException;
-use Symfony\Component\HttpFoundation\Response;
+use HOB\SDK\Exception\ApiException;
 
 /**
  * Class ApiClient
@@ -53,7 +52,7 @@ class ApiClient
     {
         // Check endpoint
         if(!isset($config['endpoint'])) {
-            throw new CoreException("Missing 'endpoint' argument");
+            throw new ApiException("Missing 'endpoint' argument");
         }
 
         // Handle base path
@@ -129,44 +128,17 @@ class ApiClient
     }
 
     /**
-     * @param $url
-     * @param array $parameters
-     * @param array $headers
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function get($url, array $parameters = [], array $headers = [])
-    {
-        return $this->call('get', $url, $parameters, $headers);
-    }
-
-    /**
-     * @param $url
-     * @param array $parameters
-     * @param array $headers
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function post($url, array $parameters = [], array $headers = [])
-    {
-        return $this->call('post', $url, $parameters, $headers);
-    }
-
-    /**
      * @param $method
      * @param $url
      * @param array $parameters
      * @param array $headers
      * @return mixed
      */
-    private function call($method, $url, array $parameters = [], array $headers = [])
+    public function call($method, $url, array $parameters = [], array $headers = [])
     {
         try {
             return $this->client->{$method}($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
-        } catch (ClientException $e) {
-            switch($e->getCode()) {
-                case Response::HTTP_NOT_FOUND:
-                    return $e->getResponse();
-            }
-
+        } catch (RequestException $e) {
             throw $e;
         }
     }

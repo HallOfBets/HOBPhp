@@ -1,11 +1,12 @@
 <?php
 namespace HOB\SDK;
 
-use HOB\SDK\Api\Bookmaker;
+use HOB\SDK\Api\BettingService;
 use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
-use HOB\SDK\Api\Warehouse;
-use HOB\SDK\Exception\CoreException;
+use HOB\SDK\Api\WarehouseService;
+use HOB\SDK\Api\WarehouseStatsService;
+use HOB\SDK\Exception\HOBException;
 
 /**
  * Class HOBApi
@@ -19,14 +20,19 @@ class HOBApi
     private $apiClient;
 
     /**
-     * @var Warehouse
+     * @var WarehouseService
      */
     public $warehouse;
 
     /**
-     * @var Bookmaker
+     * @var WarehouseStatsService
      */
-    public $bookmaker;
+    public $warehouseStats;
+
+    /**
+     * @var BettingService
+     */
+    public $betting;
 
 
     /**
@@ -45,8 +51,9 @@ class HOBApi
         $this->setApiClient($endpoint, $basepath, $apiKey, $guzzleOptions);
 
         // Add services
-        $this->warehouse            = new Warehouse($this->apiClient);
-        $this->bookmaker            = new Bookmaker($this->apiClient);
+        $this->warehouse            = new WarehouseService($this->apiClient);
+        $this->warehouseStats       = new WarehouseStatsService($this->apiClient);
+        $this->betting            = new BettingService($this->apiClient);
     }
 
     /**
@@ -73,8 +80,8 @@ class HOBApi
     /**
      * Checks for all dependencies of SDK or API.
      *
-     * @throws CoreException If CURL extension is not found.
-     * @throws CoreException If JSON extension is not found.
+     * @throws HOBException If CURL extension is not found.
+     * @throws HOBException If JSON extension is not found.
      */
     final public function checkRequirements()
     {
@@ -83,7 +90,7 @@ class HOBApi
         }
 
         if (!function_exists('json_decode')) {
-            throw new CoreException('JSON extension is needed to use HOB SDK. Not found.');
+            throw new HOBException('JSON extension is needed to use HOB SDK. Not found.');
         }
     }
 }

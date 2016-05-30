@@ -49,4 +49,18 @@ class GuzzleClient
 
         return $response;
     }
+
+    /**
+     * @param $url
+     * @param array $parameters
+     * @param array $headers
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function patch($url, array $parameters = [], array $headers = [])
+    {
+        $request    = new Request('PATCH', $url, $headers);
+        $response   = $this->client->send($request, ['json' => $parameters]);
+
+        return $response;
+    }
 }

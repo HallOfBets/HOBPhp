@@ -2,10 +2,10 @@
 namespace HOB\SDK\Exception;
 
 /**
- * Class ApiException
+ * Class HOBException
  * @package HOB\SDK\Exception
  */
-class ApiException extends HOBException
+class HOBException extends \Exception
 {
 
 }
