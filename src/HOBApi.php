@@ -2,6 +2,7 @@
 namespace HOB\SDK;
 
 use HOB\SDK\Api\BettingService;
+use HOB\SDK\Api\BookmakerService;
 use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
 use HOB\SDK\Api\WarehouseService;
@@ -34,6 +35,11 @@ class HOBApi
      */
     public $betting;
 
+    /**
+     * @var BookmakerService
+     */
+    public $bookmaker;
+
 
     /**
      * HOBApi constructor.
@@ -53,7 +59,8 @@ class HOBApi
         // Add services
         $this->warehouse            = new WarehouseService($this->apiClient);
         $this->warehouseStats       = new WarehouseStatsService($this->apiClient);
-        $this->betting            = new BettingService($this->apiClient);
+        $this->betting              = new BettingService($this->apiClient);
+        $this->bookmaker            = new BookmakerService($this->apiClient);
     }
 
     /**
