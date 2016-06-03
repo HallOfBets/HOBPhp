@@ -34,6 +34,6 @@ class ContactService implements ServiceInterface
     public function __construct(ApiClient $apiClient)
     {
         $this->types             = new TypesResource($apiClient, $this->servicePrefix, '/types');
-        $this->types             = new MessagesResource($apiClient, $this->servicePrefix, '/messages');
+        $this->messages           = new MessagesResource($apiClient, $this->servicePrefix, '/messages');
     }
 }
