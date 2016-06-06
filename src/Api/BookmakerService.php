@@ -34,6 +34,6 @@ class BookmakerService implements ServiceInterface
     public function __construct(ApiClient $apiClient)
     {
         $this->bets             = new BetsResource($apiClient, $this->servicePrefix, '/bets');
-        $this->sports           = new SportsResource($apiClient, $this->servicePrefix, '/bets');
+        $this->sports           = new SportsResource($apiClient, $this->servicePrefix, '/sports');
     }
 }
