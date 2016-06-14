@@ -139,6 +139,11 @@ class ApiClient
         try {
             return $this->client->{$method}($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
         } catch (RequestException $e) {
+
+            if ($e->getResponse()->getStatusCode() == '400') {
+                return $e->getResponse();
+            }
+
             throw $e;
         }
     }

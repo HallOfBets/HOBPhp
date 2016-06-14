@@ -85,4 +85,12 @@ class HOBApiResult
     {
         $this->body = $this->body[0];
     }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function getResponse()
+    {
+        return $this->response;
+    }
 }
