@@ -4,6 +4,7 @@ namespace HOB\SDK\Api\Helper;
 use GuzzleHttp\Exception\RequestException;
 use HOB\SDK\Api\Header\Header;
 use HOB\SDK\Exception\ApiException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiClient
@@ -140,7 +141,7 @@ class ApiClient
             return $this->client->{$method}($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
         } catch (RequestException $e) {
 
-            if ($e->getResponse()->getStatusCode() == '400') {
+            if ($e->getResponse()->getStatusCode() == Response::HTTP_BAD_REQUEST) {
                 return $e->getResponse();
             }
 
