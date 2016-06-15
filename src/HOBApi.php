@@ -7,6 +7,7 @@ use HOB\SDK\Api\BookmakerService;
 use HOB\SDK\Api\ContactService;
 use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
+use HOB\SDK\Api\StreamService;
 use HOB\SDK\Api\WalletService;
 use HOB\SDK\Api\WarehouseService;
 use HOB\SDK\Api\WarehouseStatsService;
@@ -58,6 +59,11 @@ class HOBApi
      */
     public $wallet;
 
+    /**
+     * @var StreamService
+     */
+    public $stream;
+
 
     /**
      * HOBApi constructor.
@@ -82,6 +88,7 @@ class HOBApi
         $this->contact              = new ContactService($this->apiClient);
         $this->bettingslip          = new BettingslipService($this->apiClient);
         $this->wallet               = new WalletService($this->apiClient);
+        $this->stream               = new StreamService($this->apiClient);
     }
 
     /**
