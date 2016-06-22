@@ -15,7 +15,7 @@ class CompetitorsResource extends GenericResource
      */
     public function create(array $params = [])
     {
-        return $this->call('POST', '/tournaments/'. (int) $params['tournament'] . $this->resourcePrefix, $params);
+        return $this->call('POST', '/tournaments/'. $params['tournament'] . $this->resourcePrefix, $params);
     }
 
     /**

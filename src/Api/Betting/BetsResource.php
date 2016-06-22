@@ -16,7 +16,7 @@ class BetsResource extends GenericResource
      */
     public function unwind(array $params)
     {
-        $url = sprintf("%s/%d/unwind", $this->resourcePrefix, (int) $params['bet']);
+        $url = sprintf("%s/%d/unwind", $this->resourcePrefix, $params['bet']);
 
         return $this->call('POST', $url, $params);
     }

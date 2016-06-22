@@ -16,7 +16,7 @@ class MatchesResource extends GenericResource
      */
     public function createMatchCompetitor(array $params)
     {
-        $url = sprintf("%s/%d/competitors", $this->resourcePrefix, (int) $params['match']);
+        $url = sprintf("%s/%d/competitors", $this->resourcePrefix, $params['match']);
 
         return $this->call('POST', $url, $params);
     }
@@ -27,7 +27,7 @@ class MatchesResource extends GenericResource
      */
     public function updateMatchCompetitor(array $params)
     {
-        $url = sprintf("%s/%d/competitors/%d", $this->resourcePrefix, (int) $params['match'], (int) $params['competitor']);
+        $url = sprintf("%s/%d/competitors/%d", $this->resourcePrefix, $params['match'], $params['competitor']);
 
         return $this->call('PATCH', $url, $params);
     }

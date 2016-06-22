@@ -15,7 +15,7 @@ class PlayersResource extends GenericResource
      */
     public function create(array $params = [])
     {
-        return $this->call('POST', '/sports/'. (int) $params['sport'] . $this->resourcePrefix, $params);
+        return $this->call('POST', '/sports/'. $params['sport'] . $this->resourcePrefix, $params);
     }
 
     /**

@@ -99,7 +99,7 @@ abstract class GenericResource implements ResourceInterface
      */
     public function find($id)
     {
-        return $this->call('GET', $this->resourcePrefix.'/'. (int) $id);
+        return $this->call('GET', $this->resourcePrefix.'/'. $id);
 
     }
 
@@ -108,7 +108,7 @@ abstract class GenericResource implements ResourceInterface
      */
     public function update($id, array $params = [])
     {
-        return $this->call('PATCH', $this->resourcePrefix.'/'. (int) $id, $params);
+        return $this->call('PATCH', $this->resourcePrefix.'/'. $id, $params);
     }
 
     /**
@@ -116,6 +116,6 @@ abstract class GenericResource implements ResourceInterface
      */
     public function delete($id)
     {
-        return $this->call('DELETE', $this->resourcePrefix.'/'. (int) $id);
+        return $this->call('DELETE', $this->resourcePrefix.'/'. $id);
     }
 }
