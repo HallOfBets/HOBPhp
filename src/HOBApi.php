@@ -1,9 +1,9 @@
 <?php
 namespace HOB\SDK;
 
+use HOB\SDK\Api\BetsService;
 use HOB\SDK\Api\BettingService;
 use HOB\SDK\Api\BettingslipService;
-use HOB\SDK\Api\BookmakerService;
 use HOB\SDK\Api\ContactService;
 use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
@@ -40,9 +40,9 @@ class HOBApi
     public $betting;
 
     /**
-     * @var BookmakerService
+     * @var BetsService
      */
-    public $bookmaker;
+    public $bets;
 
     /**
      * @var ContactService
@@ -84,7 +84,7 @@ class HOBApi
         $this->warehouse            = new WarehouseService($this->apiClient);
         $this->warehouseStats       = new WarehouseStatsService($this->apiClient);
         $this->betting              = new BettingService($this->apiClient);
-        $this->bookmaker            = new BookmakerService($this->apiClient);
+        $this->bets                 = new BetsService($this->apiClient);
         $this->contact              = new ContactService($this->apiClient);
         $this->bettingslip          = new BettingslipService($this->apiClient);
         $this->wallet               = new WalletService($this->apiClient);

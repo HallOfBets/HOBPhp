@@ -1,21 +1,21 @@
 <?php
 namespace HOB\SDK\Api;
 
-use HOB\SDK\Api\Bookmaker\BetsResource;
-use HOB\SDK\Api\Bookmaker\SportsResource;
+use HOB\SDK\Api\Bets\BetsResource;
+use HOB\SDK\Api\Bets\SportsResource;
 use HOB\SDK\Api\Helper\ApiClient;
 use HOB\SDK\Model\ServiceInterface;
 
 /**
- * Class BookmakerService
+ * Class BetsService
  * @package HOB\SDK\Api
  */
-class BookmakerService implements ServiceInterface
+class BetsService implements ServiceInterface
 {
     /**
      * @var string
      */
-    protected $servicePrefix = '/bookmaker';
+    protected $servicePrefix = '/bets';
 
     /**
      * @var BetsResource

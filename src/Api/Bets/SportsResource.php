@@ -1,12 +1,12 @@
 <?php
-namespace HOB\SDK\Api\Bookmaker;
+namespace HOB\SDK\Api\Bets;
 
 use HOB\SDK\Api\GenericResource;
 use HOB\SDK\Exception\NotImplementedException;
 
 /**
  * Class SportsResource
- * @package HOB\SDK\Api\Bookmaker
+ * @package HOB\SDK\Api\Bets
  */
 class SportsResource extends GenericResource
 {
