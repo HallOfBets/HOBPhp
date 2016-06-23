@@ -7,6 +7,7 @@ use HOB\SDK\Api\BettingslipService;
 use HOB\SDK\Api\ContactService;
 use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
+use HOB\SDK\Api\IAMService;
 use HOB\SDK\Api\StreamService;
 use HOB\SDK\Api\WalletService;
 use HOB\SDK\Api\WarehouseService;
@@ -23,6 +24,11 @@ class HOBApi
      * @var ApiClient
      */
     private $apiClient;
+
+    /**
+     * @var IAMService
+     */
+    public $iam;
 
     /**
      * @var WarehouseService
@@ -81,6 +87,7 @@ class HOBApi
         $this->setApiClient($endpoint, $basepath, $apiKey, $guzzleOptions);
 
         // Add services
+        $this->iam                  = new IAMService($this->apiClient);
         $this->warehouse            = new WarehouseService($this->apiClient);
         $this->warehouseStats       = new WarehouseStatsService($this->apiClient);
         $this->betting              = new BettingService($this->apiClient);

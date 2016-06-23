@@ -28,7 +28,8 @@ class ContactService implements ServiceInterface
     public $messages;
 
     /**
-     * WarehouseService constructor.
+     * ContactService constructor.
+     *
      * @param ApiClient $apiClient
      */
     public function __construct(ApiClient $apiClient)
