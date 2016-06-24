@@ -19,7 +19,7 @@ class AuthResource extends GenericResource
      */
     public function register(array $params = [])
     {
-        return $this->call('POST', $this->resourcePrefix.'/auth/register', $params);
+        return $this->call('POST', $this->resourcePrefix.'/register', $params);
     }
 
     /**
@@ -31,7 +31,7 @@ class AuthResource extends GenericResource
      */
     public function login(array $params = [])
     {
-        return $this->call('POST', $this->resourcePrefix.'/auth/login', $params);
+        return $this->call('POST', $this->resourcePrefix.'/login', $params);
     }
 
     /**

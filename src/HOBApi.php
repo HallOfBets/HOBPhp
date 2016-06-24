@@ -5,7 +5,6 @@ use HOB\SDK\Api\BetsService;
 use HOB\SDK\Api\BettingService;
 use HOB\SDK\Api\BettingslipService;
 use HOB\SDK\Api\ContactService;
-use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Helper\ApiClient;
 use HOB\SDK\Api\IAMService;
 use HOB\SDK\Api\StreamService;
@@ -111,12 +110,21 @@ class HOBApi
             'endpoint'      => $apiEndpoint,
             'basepath'      => $basepath,
             'guzzleOptions' => $guzzleOptions,
-            'headers' => [
-                new AuthorizationBearer($apiKey)
-            ]
         ]);
 
+        $client->setAuthorizationHeader($apiKey);
+
         $this->apiClient = $client;
+    }
+
+    /**
+     * @param $apiKey
+     *
+     * @throws HOBException
+     */
+    public function setAipKey($apiKey)
+    {
+        $this->apiClient->setAuthorizationHeader($apiKey);
     }
 
     /**

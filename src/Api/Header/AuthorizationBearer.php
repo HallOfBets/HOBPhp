@@ -7,6 +7,8 @@ namespace HOB\SDK\Api\Header;
  */
 class AuthorizationBearer extends Header
 {
+    const TYPE = 'Bearer';
+    
     /**
      * AuthorizationBearer constructor.
      * @param $token

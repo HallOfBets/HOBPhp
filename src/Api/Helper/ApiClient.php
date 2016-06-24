@@ -2,8 +2,10 @@
 namespace HOB\SDK\Api\Helper;
 
 use GuzzleHttp\Exception\RequestException;
+use HOB\SDK\Api\Header\AuthorizationBearer;
 use HOB\SDK\Api\Header\Header;
 use HOB\SDK\Exception\ApiException;
+use HOB\SDK\Exception\HOBException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -115,6 +117,18 @@ class ApiClient
     }
 
     /**
+     * @param $headerName
+     */
+    public function removeHeader($headerName)
+    {
+        foreach($this->headers as $key => $header) {
+            if($header->getHeader() == $headerName) {
+                unset($key);
+            }
+        }
+    }
+
+    /**
      * @return array
      */
     protected function getRequestHeaders()
@@ -138,15 +152,22 @@ class ApiClient
     public function call($method, $url, array $parameters = [], array $headers = [])
     {
         try {
-            return $this->client->{$method}($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
+            $response = $this->client->{$method}($this->formatUrl($url), $parameters, array_merge($this->getRequestHeaders(), $headers));
+
         } catch (RequestException $e) {
 
-            if ($e->getResponse()->getStatusCode() == Response::HTTP_BAD_REQUEST) {
-                return $e->getResponse();
+            if ($e->getResponse()->getStatusCode() != Response::HTTP_BAD_REQUEST) {
+                throw $e;
             }
 
-            throw $e;
+            $response = $e->getResponse();
         }
+
+        if($response->hasHeader('X-TOKEN')) {
+            $this->setAuthorizationHeader($response->getHeader('X-TOKEN')[0]);
+        }
+
+        return $response;
     }
 
     /**
@@ -156,5 +177,25 @@ class ApiClient
     protected function formatUrl($url)
     {
         return $this->basepath . $url;
+    }
+
+    /**
+     * @param        $authorizationValue
+     * @param string $type
+     *
+     * @throws HOBException
+     */
+    public function setAuthorizationHeader($authorizationValue, $type = AuthorizationBearer::TYPE)
+    {
+        switch($type) {
+            case AuthorizationBearer::TYPE:
+                $header = new AuthorizationBearer($authorizationValue);
+                break;
+            default:
+                throw new HOBException("Authorization type '{$type}' not found");
+        }
+
+        $this->removeHeader('Authorization');
+        $this->addHeader($header);
     }
 }
